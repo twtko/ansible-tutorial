@@ -1,0 +1,10 @@
+---
+- name: Ansible Tutorial 04
+  hosts: all
+  become: true
+  tasks:
+    - name: create new ssh keys without passphases
+      command: "/usr/bin/ssh-keygen -b 2048 -t rsa -N '' -f /tmp/new-id_rsa"
+      args:
+        creates: /tmp/new-id_rsa
+

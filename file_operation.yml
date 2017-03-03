@@ -1,0 +1,35 @@
+---
+- name: Python Tutorial 02
+  hosts: all
+  become: true
+  tasks:
+    - name: crate /tmp/dir1 folder
+      file:
+        path: /tmp/dir1
+        state: directory
+
+    - name: create soft link
+      file:
+        src: /tmp/dir1
+        dest: /tmp/link_to_dir1
+        state: link
+
+    - name: change folder ower
+      file:
+        path: /tmp/dir1
+        state: directory
+        owner: vagrant
+        group: vagrant
+        mode: 0755
+
+    - name: file copy 1
+      copy:
+        src: testfile1.txt
+        dest: /tmp/dir1/testfile1_copy.txt
+        backup: true
+
+    - name: modify file inline
+      lineinfile:
+        dest: /tmp/dir1/testfile1_copy.txt
+        regexp: 'change\s+'
+        line: change_${date}

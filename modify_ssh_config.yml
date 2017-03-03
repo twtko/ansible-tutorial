@@ -1,0 +1,19 @@
+---
+- name: Python Tutorial 03
+  hosts: all
+  become: true
+  tasks:
+    - name: modify ssh config (deny root ssh connect using password)
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin\s+'
+        line: PermitRootLogin without-password
+        validate: sshd -t -f %s
+      notify:
+        - reboot sshd
+  handlers:
+    - name: reboot sshd
+      service:
+        name: sshd
+        state: restarted
+

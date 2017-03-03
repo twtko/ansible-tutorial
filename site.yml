@@ -1,0 +1,29 @@
+---
+- name: Python Tutorial 01
+  hosts: all
+  become: true
+  tasks:
+    #- name: Update yum.conf
+    #  shell: echo proxy=http://proxy-wsa.esl.cisco.com:80 >> /etc/yum.conf
+
+    - name: Install libselinux-python
+      yum:
+        name: libselinux-python
+        state: present
+
+    - name: Install EPEL repository
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: setup Nginx service status and startup setting
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
